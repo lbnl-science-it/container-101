@@ -27,11 +27,11 @@
 <h1 id="outline">Outline</h1>
 <ul>
 <li>Lawrencium Supercluster overview</li>
-<li>Lawrencium resources &amp; services<br />
+<li>Computing resources &amp; services<br />
 </li>
 <li>Container technology overview</li>
-<li>How to build singularity containers</li>
-<li>How to run singularity containers on Lawrencium</li>
+<li>Build singularity containers</li>
+<li>Run singularity containers on Lawrencium</li>
 </ul>
 <h1 id="lawrencium-cluster-overview">Lawrencium Cluster Overview</h1>
 <center>
@@ -39,13 +39,13 @@
 </center>
 <h1 id="lawrencium-condo-cluster">Lawrencium Condo Cluster</h1>
 <ul>
-<li>Lawrencium is a LBNL Condo Cluster Computing resources
+<li>Lawrencium is a LBNL Condo Computer clusterresources
 <ul>
 <li>Significant investment from LBNL</li>
 <li>Individual PIs purchase nodes and storage</li>
 <li>Computational cycles are shared among all lawrencium users</li>
 </ul></li>
-<li>Share the same supercluster infrastructure:
+<li>Cluster infrastructure:
 <ul>
 <li>OTP authentication</li>
 <li>High speed infiniBand parallel file system for fast inter-node communication</li>
@@ -73,7 +73,7 @@
 </ul>
 <h1 id="softwre-module-farm">Softwre Module Farm</h1>
 <center>
-<img src="figures/SMF.png" width="80%">
+<img src="figures/SMF.png" width="60%">
 </center>
 <h1 id="module-commands">Module commands</h1>
 <ul>
@@ -135,11 +135,44 @@
 <li>Detailed <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop">information</a></li>
 </ul></li>
 </ul>
-<h1 id="jupyterhub">Jupyterhub</h1>
+<h1 id="service-jupyterhub">Service: Jupyterhub</h1>
 <center>
 <img src="figures/jupyter.png" width="80%">
 </center>
 <p>https://lrc-jupyter.lbl.gov</p>
+<h1 id="services-cloud-computing">Services: Cloud Computing</h1>
+<ul>
+<li>LBNL has a master payer program for cloud services on Amazon Web Services (AWS) and Google Cloud Platform (GCP).<br />
+</li>
+<li><ul>
+<li>No charge to have an account in the program</li>
+</ul></li>
+<li><ul>
+<li>Charges only for actual usage of cloud services like storage or compute</li>
+</ul></li>
+<li><ul>
+<li>Monthly billing for cloud usage are direct to your PID via recharge mechanism</li>
+</ul></li>
+<li><ul>
+<li>Simple enrollment process.</li>
+</ul></li>
+<li><ul>
+<li>De-enrollment only changes the billing setup in your account, and your account will continue to be active.</li>
+</ul></li>
+<li><ul>
+<li>You maintain complete control of your own AWS or GCP dashboard, and your data, tools, and services in your account are only accessible by you.</li>
+</ul></li>
+</ul>
+<h1 id="services-cloud-computing-1">Services: Cloud Computing</h1>
+<ul>
+<li><p>Both AWS and GCP make discounts available to LBNL users for using their services. Generally speaking, costs for using GCP will be lower than AWS due to lower pricing and additional discounts. The discounts are: | Type | AWS | GCP | | | — | — | — | — | | Overall | 7% | 13% | | | Data Egress | 15% | 25% |</p></li>
+<li><p>AWS, <a href="https://aws.amazon.com/blogs/publicsector/aws-offers-data-egress-discount-to-researchers/">restrictions apply</a> |</p></li>
+<li><p>Over 125 people at LBNL with cloud accounts on AWS and GCP.<br />
+</p></li>
+<li><p>Mostly use virtual machines and storage</p></li>
+<li><p>Use containerization, machine learning, AI, and data visualization services on both platforms.</p></li>
+<li><p>To set up a cloud account on either AWS or GCP, send email to <a href="mailto:scienceit@lbl.gov">scienceit@lbl.gov</a></p></li>
+</ul>
 <h1 id="containerization">Containerization</h1>
 <ul>
 <li>Technology of putting an application and all of its dependencies into a single package.</li>
@@ -154,6 +187,9 @@
 <li>Create a pipeline or complex workflow where each individual program is meant to run on a different operating system.</li>
 </ul>
 <h1 id="container-vs.-virtual-machine">Container vs. Virtual Machine</h1>
+<center>
+<img src="figures/vm-sif.png" width="70%">
+</center>
 <h1 id="vm-services">VM services</h1>
 <center>
 <img src="figures/vm.png" width="70%">
@@ -229,12 +265,12 @@ singularity pull docker://gcc:7.2.0</code></pre>
 <li>Build from a definition file</li>
 </ul>
 <pre><code>sudo singularity --debug build mycontainer.sif Singularity </code></pre>
-<h1 id="defination-files-recipts">Defination files (recipts)</h1>
+<h1 id="defination-filerecipe">Defination File/Recipe</h1>
 <pre><code>Bootstrap: docker
-From: ubuntu
+From: ubuntu
 # used singularity run-help 
 %help
-Hello. I&#39;m in the container.
+Hello. I&#39;m in the container.
 # executed on host after the base OS is installed.
 %setup
     touch ${SINGULARITY_ROOTFS}/tacos.txt
@@ -267,36 +303,42 @@ Hello. I&#39;m in the container.
 <li>busybox (BusyBox)</li>
 <li>zypper (zypper ba</li>
 </ul>
-<h1 id="singularity-build-a-rewritable-sandbox">Singularity build a rewritable sandbox</h1>
-<pre><code>sudo singularity build --sandbox build test-box Singularity 
-sudo singularity build --sandbox build gccbox docker://gcc:7.2.0</code></pre>
+<h1 id="singularity-build-rewritable-sandbox">Singularity Build Rewritable Sandbox</h1>
 <ul>
-<li>Can be built from a recipe or existing image</li>
+<li>Can be built from a recipe or existing container</li>
 <li>Used to develop, test, and make changes, then build or convert it into a standard image</li>
+</ul>
+<pre><code>sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
+sudo singularity build --sandbox build test-box Singularity </code></pre>
+<ul>
 <li>When you want to alter your image, you can use commands like shell, exec, run, with the –writable option</li>
 </ul>
 <pre><code>sudo singularity shell --writable test-box</code></pre>
 <ul>
-<li>Convert a sandbox to an immutable final image:</li>
+<li>Convert a sandbox to an immutable final container:</li>
 </ul>
 <pre><code>sudo singularity build test-box.sif test-box</code></pre>
-<p>To check how a images is built, running script and environment variables.</p>
 <h1 id="inspect-containers">Inspect containers</h1>
+<ul>
+<li>To check how a images is built, running script and environment variables..</li>
+</ul>
 <pre><code>singularity inspect [options] image_name
     --lablels
     --runscript
     --deffile
-    --environment</code></pre>
+    --environment
+e.g. singularity inspect --deffile mycontainer.sif</code></pre>
 <h1 id="singularity-python-spython">Singularity Python (spython)</h1>
 <ul>
 <li>Python API for Singularity containers</li>
+<li>Convert Dockerfile to Singularity def</li>
 </ul>
-<pre><code></code></pre>
-<h1 id="run-singularity-containers-on-lawrencium">Run Singularity containers on Lawrencium</h1>
+<pre><code>spython recipe Dockerfile &gt; dock2sif.def</code></pre>
+<h1 id="run-singularity-containers-on-lawrencium">Run Singularity Containers on Lawrencium</h1>
 <ul>
 <li>File transfer to LRC cluster</li>
 </ul>
-<pre><code>scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path </code></pre>
+<pre><code>scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path/on/cluster </code></pre>
 <ul>
 <li>Run your container interactively
 <ul>
@@ -315,10 +357,29 @@ sudo singularity build --sandbox build gccbox docker://gcc:7.2.0</code></pre>
 #SBATCH --time=1-2:0:0          
 
 cd $SLURM_SUBMIT_DIR
-singularity exec your-container-name.sif CMD PARMs</code></pre>
-<h1 id="container-binging-points">Container binging points</h1>
-<h1 id="run-a-gpu-container">Run a GPU container</h1>
-<pre><code>singularity shell --nv --bind ${CUDA_HOME} ...</code></pre>
+singularity exec mycontainer.sif cat /etc/os-release</code></pre>
+<h1 id="container-bind-path">Container bind path</h1>
+<ul>
+<li>Singularity allow mapping directories on host to directories within container</li>
+<li>Easy data access within containers</li>
+<li>System-defined bind paths on LRC
+<ul>
+<li>/global/home/users/</li>
+<li>/globa/scratch/</li>
+</ul></li>
+<li>User can define own bind paths:</li>
+<li>e.g.: mount /host/path/ on the host to /container/path inside the container</li>
+</ul>
+<pre><code>-B /host/path/:/container/path
+singularity shell --nv -B /clusterfs/bear:/tmp pytorch_19_12_py3.sif</code></pre>
+<h1 id="run-gpu-containers">Run GPU Containers</h1>
+<ul>
+<li>Singularity supports NVIDIA’s CUDA GPU compute framework or AMD’s ROCm solution</li>
+<li>–nv enables NVIDIA GPU support in Singularity</li>
+<li>Remember to request a GPU node from the ES1 partition</li>
+</ul>
+<pre><code>singularity exec --nv pytorch_19_12_py3.sif python -c &quot;import torch; print(torch.__version__)&quot;
+1.4.0a0+a5b4d78</code></pre>
 <h1 id="getting-help">Getting help</h1>
 <ul>
 <li>Virtual Office Hours:

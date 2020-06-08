@@ -4,20 +4,20 @@
 
 # Outline
 - Lawrencium Supercluster overview 
-- Lawrencium resources & services  
+- Computing resources & services  
 - Container technology overview
-- How to build singularity containers
-- How to run singularity containers on Lawrencium
+- Build singularity containers
+- Run singularity containers on Lawrencium
 
 # Lawrencium Cluster Overview
 <center><img src="figures/lrc.png" width="80%"></center>
 
 # Lawrencium Condo Cluster
-- Lawrencium is a LBNL Condo Cluster Computing resources
+- Lawrencium is a LBNL Condo Computer clusterresources
     - Significant investment from LBNL
     - Individual PIs purchase nodes and storage
     - Computational cycles are shared among all lawrencium users
-- Share the same supercluster infrastructure: 
+- Cluster infrastructure: 
     - OTP authentication
     - High speed infiniBand parallel file system for fast inter-node communication
     - OS and security updates, software module farm, job scheduler SLURM
@@ -40,7 +40,7 @@
 ) for details
 
 # Softwre Module Farm 
-<center><img src="figures/SMF.png" width="80%"></center>
+<center><img src="figures/SMF.png" width="60%"></center>
 
 # Module commands
 - *module purge*: clear user’s work environment
@@ -92,9 +92,31 @@ scancel jobID
 - Visualization and remote desktop
     - Detailed [information](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop)
 
-# Jupyterhub
+# Service: Jupyterhub
 <center><img src="figures/jupyter.png" width="80%"></center>
 https://lrc-jupyter.lbl.gov
+
+# Services: Cloud Computing
+- LBNL has a master payer program for cloud services on Amazon Web Services (AWS) and Google Cloud Platform (GCP).  
+- * No charge to have an account in the program
+- * Charges only for actual usage of cloud services like storage or compute
+- * Monthly billing for cloud usage are direct to your PID via recharge mechanism
+- * Simple enrollment process.
+- * De-enrollment only changes the billing setup in your account, and your account will continue to be active.
+- * You maintain complete control of your own AWS or GCP dashboard, and your data, tools, and services in your account are only accessible by you.
+
+# Services: Cloud Computing
+- Both AWS and GCP make discounts available to LBNL users for using their services.  Generally speaking, costs for using GCP will be lower than AWS due to lower pricing and additional discounts.  The discounts are:
+| Type | AWS | GCP |  |
+| --- | --- | --- | --- |
+| Overall | 7% | 13% | |
+| Data Egress | 15% | 25% | 
+- AWS, [restrictions apply](https://aws.amazon.com/blogs/publicsector/aws-offers-data-egress-discount-to-researchers/) |
+- Over 125 people at LBNL with cloud accounts on AWS and GCP.  
+- Mostly use virtual machines and storage
+- Use containerization, machine learning, AI, and data visualization services on both platforms.
+
+- To set up a cloud account on either AWS or GCP, send email to [scienceit@lbl.gov](mailto:scienceit@lbl.gov)
 
 # Containerization
 - Technology of putting an application and all of its dependencies into a single package.
@@ -108,7 +130,7 @@ https://lrc-jupyter.lbl.gov
 - Create a pipeline or complex workflow where each individual program is meant to run on a different operating system.
 
 # Container vs. Virtual Machine
-
+<center><img src="figures/vm-sif.png" width="70%"></center>
 
 # VM services 
 <center><img src="figures/vm.png" width="70%"></center>
@@ -146,7 +168,6 @@ $ singularity run docker://godlovedc/lolcow
     - [Nvidia HPC containers](https://www.nvidia.com/en-us/gpu-cloud/containers/)
     - [Biocontainers](https://biocontainers.pro/#/registry)
     - [AWS](https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/)
-
 - Build from definition files or recipes 
 
 # Singularity pull
@@ -188,13 +209,13 @@ singularity build --help
 sudo singularity --debug build mycontainer.sif Singularity 
 ```
 
-# Defination files (recipts)
+# Defination File/Recipe
 ```
 Bootstrap: docker
-From: ubuntu
+From: ubuntu
 # used singularity run-help 
 %help
-Hello. I'm in the container.
+Hello. I'm in the container.
 # executed on host after the base OS is installed.
 %setup
     touch ${SINGULARITY_ROOTFS}/tacos.txt
@@ -228,44 +249,44 @@ Hello. I'm in the container.
 - busybox (BusyBox)
 - zypper (zypper ba
 
-# Singularity build a rewritable sandbox
-```
-sudo singularity build --sandbox build test-box Singularity 
-sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
-```
-- Can be built from a recipe or existing image 
+# Singularity Build Rewritable Sandbox
+- Can be built from a recipe or existing container 
 - Used to develop, test, and make changes, then build or convert it into a standard image
+```
+sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
+sudo singularity build --sandbox build test-box Singularity 
+```
 - When you want to alter your image, you can use commands like shell, exec, run, with the --writable option
 ```
 sudo singularity shell --writable test-box
 ```
-- Convert a sandbox to an immutable final image:
+- Convert a sandbox to an immutable final container:
 ```
 sudo singularity build test-box.sif test-box
 ```
-
-To check how a images is built, running script and environment variables. 
 	
-# Inspect containers  
+# Inspect containers
+- To check how a images is built, running script and environment variables.. 
 ```
 singularity inspect [options] image_name
     --lablels
     --runscript
     --deffile
     --environment
+e.g. singularity inspect --deffile mycontainer.sif
 ```
 
 # Singularity Python (spython)
 - Python API for Singularity containers
 - Convert Dockerfile to Singularity def
 ```
-spython recipe Dockerfile > singularity.def
+spython recipe Dockerfile > dock2sif.def
 ```
 
-# Run Singularity containers on Lawrencium
+# Run Singularity Containers on Lawrencium
 - File transfer to LRC cluster
 ```
-scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path 
+scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path/on/cluster 
 ```
 - Run your container interactively
 	- Request an interactive compute node
@@ -285,22 +306,24 @@ scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path
 #SBATCH --time=1-2:0:0			
 
 cd $SLURM_SUBMIT_DIR
-singularity exec your-container.sif CMD PARMs
+singularity exec mycontainer.sif cat /etc/os-release
 ```
 
 # Container bind path
-- Singularity allows mapping directories on host to directories within your container using bind mounts.
-- System-defined bind paths
+- Singularity allow mapping directories on host to directories within container
+- Easy data access within containers
+- System-defined bind paths on LRC
 	- /global/home/users/
 	- /globa/scratch/
-- User defined bind paths ```-B /host/path/:/container/path``` 
-	- bind mounts the /host/path/ directory on the host to /container/path inside the container
+- User can define own bind paths: 
+- e.g.: mount  /host/path/ on the host to /container/path inside the container
 ```
+-B /host/path/:/container/path
 singularity shell --nv -B /clusterfs/bear:/tmp pytorch_19_12_py3.sif
 ```
 
-# Run a GPU container
-- Singularity  supports containers that use NVIDIA’s CUDA GPU compute framework, or AMD’s ROCm solution
+# Run GPU Containers
+- Singularity supports NVIDIA’s CUDA GPU compute framework or AMD’s ROCm solution
 - --nv enables NVIDIA GPU support in Singularity
 - Remember to request a GPU node from the ES1 partition
 ```
