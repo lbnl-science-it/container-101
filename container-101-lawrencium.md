@@ -52,21 +52,35 @@
 
 # Jub Submission
 - sbatch: submit a job to the batch queue system
-```sbatch myjob.sh```
+```
+sbatch myjob.sh
+```
 - srun: request an interactive node(s) and login automatically
-```srun -A ac_xxx -p lr5 -q lr_normal -t 1:0:0 --pty bash```
+```
+srun -A ac_xxx -p lr5 -q lr_normal -t 1:0:0 --pty bash
+```
 - salloc : request an interactive node(s)
- 	```salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0```
+```
+salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0
+```
 
 # Job Monitoring
 - sinfo:view information about partitions and nodes (idle, allocated, drain, down ) 
- ```sinfo –r –p lr6```
+ ```
+ sinfo –r –p lr6
+ ```
 - squeue: check the current jobs in the batch queue system
-	```squeue –u $USER```
+```
+squeue –u $USER
+```
 - sacct: information on jobs
-	```sacct -X -o ‘jobid,user,partition,nodelist,stat’```
+```
+sacct -X -o ‘jobid,user,partition,nodelist,stat’
+```
 - scancel : cancel a job
- 	```scancel jobID```
+```
+scancel jobID
+```
 - More [information](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions)
 
 # Resources
@@ -80,7 +94,7 @@
 
 # Jupyterhub
 <center><img src="figures/jupyter.png" width="80%"></center>
-[https://lrc-jupyter.lbl.gov](https://lrc-jupyter.lbl.gov)
+https://lrc-jupyter.lbl.gov
 
 # Containerization
 - Technology of putting an application and all of its dependencies into a single package.
@@ -97,7 +111,7 @@
 
 
 # VM services 
-<center><img src="vm.png" width="70%"></center>
+<center><img src="figures/vm.png" width="70%"></center>
 [More information about VM](https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting
 )
 
@@ -119,7 +133,7 @@ Three OS platforms:
     - Linux
     - Mac
     - Window
-Installation [instructions]()
+Installation [instructions](https://github.com/lbnl-science-it/container-101/blob/master/singularity_installation_guide.md)
 ```
 $ singularity --version 
 $ singularity run docker://godlovedc/lolcow
@@ -133,35 +147,46 @@ $ singularity run docker://godlovedc/lolcow
     - [Biocontainers](https://biocontainers.pro/#/registry)
     - [AWS](https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/)
 
-- Build from a definition file or recipes 
+- Build from definition files or recipes 
 
 # Singularity pull
 - No root/sudo privilege is needed
 - Create immutable squashfs containers
-```singularity pull --help```
+```
+singularity pull --help
+```
 - Docker Hub:  Pull a container from Docker Hub.
 ```
 singularity pull docker://ubuntu:18.04 
 singularity pull docker://gcc:7.2.0
 ```
 - Singularity Hub:  If no tag is specified, the master branch of the repository is used
-```singularity pull shub://singularityhub/hello-world```
+```
+singularity pull shub://singularityhub/hello-world
+```
 
 # Singularity shell, run, exec
 - **shell** sub-command: invokes an interactive shell within a container
-```singularity shell hello-world_latest.sif```
-
+```
+singularity shell hello-world_latest.sif
+```
 - **run** sub-command: executes the container’s runscript
-```singularity run hello-world_latest.sif ```
-
+```
+singularity run hello-world_latest.sif 
+```
 - **exec** sub-command: execute an arbitrary command within container 
-```singularity exec hello-world_latest.sif cat /etc/os-release```
-
+```
+singularity exec hello-world_latest.sif cat /etc/os-release
+```
 # Singularity build
 - Root/sudo privilege is needed
-```singularity build --help```
+```
+singularity build --help
+```
 - Build from a definition file
-```sudo singularity --debug build mycontainer.sif Singularity ```
+```
+sudo singularity --debug build mycontainer.sif Singularity 
+```
 
 # Defination files (recipts)
 ```
@@ -211,9 +236,13 @@ sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
 - Can be built from a recipe or existing image 
 - Used to develop, test, and make changes, then build or convert it into a standard image
 - When you want to alter your image, you can use commands like shell, exec, run, with the --writable option
-`sudo singularity shell --writable test-box```
+```
+sudo singularity shell --writable test-box
+```
 - Convert a sandbox to an immutable final image:
-```sudo singularity build test-box.sif test-box```
+```
+sudo singularity build test-box.sif test-box
+```
 
 To check how a images is built, running script and environment variables. 
 	
@@ -234,10 +263,14 @@ singularity inspect [options] image_name
 
 # Run Singularity containers on Lawrencium
 - File transfer to LRC cluster
-```scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path ```
+```
+scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path 
+```
 - Run your container interactively
 	- Request an interactive compute node
-	-```singularity shell/run/exec container.sif```
+	```
+	singularity shell/run/exec container.sif
+	```
 - Submit a slurm job 
 
 # Job Submission Example
@@ -258,7 +291,9 @@ singularity exec your-container-name.sif CMD PARMs
 
 
 # Run a GPU container
-```singularity shell --nv --bind ${CUDA_HOME} ...```
+```
+singularity shell --nv --bind ${CUDA_HOME} ...
+```
 
 # Getting help
 - Virtual Office Hours:
@@ -267,6 +302,4 @@ singularity exec your-container-name.sif CMD PARMs
 - Sending us tickets at hpcshelp@lbl.gov
 - More information, documents, tips of how to use LBNL Supercluster http://scs.lbl.gov/
 - DLab consulting: https://dlab.berkeley.edu/consulting
-
-
 

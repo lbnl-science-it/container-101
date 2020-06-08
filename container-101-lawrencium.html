@@ -86,16 +86,35 @@
 </ul>
 <h1 id="jub-submission">Jub Submission</h1>
 <ul>
-<li>sbatch: submit a job to the batch queue system <code>sbatch myjob.sh</code></li>
-<li>srun: request an interactive node(s) and login automatically <code>srun -A ac_xxx -p lr5 -q lr_normal -t 1:0:0 --pty bash</code></li>
-<li>salloc : request an interactive node(s) <code>salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0</code></li>
+<li>sbatch: submit a job to the batch queue system</li>
 </ul>
+<pre><code>sbatch myjob.sh</code></pre>
+<ul>
+<li>srun: request an interactive node(s) and login automatically</li>
+</ul>
+<pre><code>srun -A ac_xxx -p lr5 -q lr_normal -t 1:0:0 --pty bash</code></pre>
+<ul>
+<li>salloc : request an interactive node(s)</li>
+</ul>
+<pre><code>salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0</code></pre>
 <h1 id="job-monitoring">Job Monitoring</h1>
 <ul>
-<li>sinfo:view information about partitions and nodes (idle, allocated, drain, down ) <code>sinfo –r –p lr6</code></li>
-<li>squeue: check the current jobs in the batch queue system <code>squeue –u $USER</code></li>
-<li>sacct: information on jobs <code>sacct -X -o ‘jobid,user,partition,nodelist,stat’</code></li>
-<li>scancel : cancel a job <code>scancel jobID</code></li>
+<li>sinfo:view information about partitions and nodes (idle, allocated, drain, down )</li>
+</ul>
+<pre><code>sinfo –r –p lr6</code></pre>
+<ul>
+<li>squeue: check the current jobs in the batch queue system</li>
+</ul>
+<pre><code>squeue –u $USER</code></pre>
+<ul>
+<li>sacct: information on jobs</li>
+</ul>
+<pre><code>sacct -X -o ‘jobid,user,partition,nodelist,stat’</code></pre>
+<ul>
+<li>scancel : cancel a job</li>
+</ul>
+<pre><code>scancel jobID</code></pre>
+<ul>
 <li>More <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions">information</a></li>
 </ul>
 <h1 id="resources">Resources</h1>
@@ -120,7 +139,7 @@
 <center>
 <img src="figures/jupyter.png" width="80%">
 </center>
-<p><a href="https://lrc-jupyter.lbl.gov">https://lrc-jupyter.lbl.gov</a></p>
+<p>https://lrc-jupyter.lbl.gov</p>
 <h1 id="containerization">Containerization</h1>
 <ul>
 <li>Technology of putting an application and all of its dependencies into a single package.</li>
@@ -137,7 +156,7 @@
 <h1 id="container-vs.-virtual-machine">Container vs. Virtual Machine</h1>
 <h1 id="vm-services">VM services</h1>
 <center>
-<img src="vm.png" width="70%">
+<img src="figures/vm.png" width="70%">
 </center>
 <p><a href="https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting">More information about VM</a></p>
 <h1 id="singularity-technology">Singularity Technology</h1>
@@ -158,7 +177,7 @@
 </ul></li>
 </ul>
 <h1 id="install-singularity">Install Singularity</h1>
-<p>Three OS platforms: - Linux - Mac - Window Installation <a href="">instructions</a></p>
+<p>Three OS platforms: - Linux - Mac - Window Installation <a href="https://github.com/lbnl-science-it/container-101/blob/master/singularity_installation_guide.md">instructions</a></p>
 <pre><code>$ singularity --version 
 $ singularity run docker://godlovedc/lolcow</code></pre>
 <h1 id="create-singularity-containers">Create Singularity Containers</h1>
@@ -171,30 +190,45 @@ $ singularity run docker://godlovedc/lolcow</code></pre>
 <li><a href="https://biocontainers.pro/#/registry">Biocontainers</a></li>
 <li><a href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/">AWS</a></li>
 </ul></li>
-<li>Build from a definition file or recipes</li>
+<li>Build from definition files or recipes</li>
 </ul>
 <h1 id="singularity-pull">Singularity pull</h1>
 <ul>
 <li>No root/sudo privilege is needed</li>
-<li>Create immutable squashfs containers <code>singularity pull --help</code></li>
+<li>Create immutable squashfs containers</li>
+</ul>
+<pre><code>singularity pull --help</code></pre>
+<ul>
 <li>Docker Hub:  Pull a container from Docker Hub.</li>
 </ul>
 <pre><code>singularity pull docker://ubuntu:18.04 
 singularity pull docker://gcc:7.2.0</code></pre>
 <ul>
-<li>Singularity Hub:  If no tag is specified, the master branch of the repository is used <code>singularity pull shub://singularityhub/hello-world</code></li>
+<li>Singularity Hub:  If no tag is specified, the master branch of the repository is used</li>
 </ul>
+<pre><code>singularity pull shub://singularityhub/hello-world</code></pre>
 <h1 id="singularity-shell-run-exec">Singularity shell, run, exec</h1>
 <ul>
-<li><p><strong>shell</strong> sub-command: invokes an interactive shell within a container <code>singularity shell hello-world_latest.sif</code></p></li>
-<li><p><strong>run</strong> sub-command: executes the container’s runscript <code>singularity run hello-world_latest.sif</code></p></li>
-<li><p><strong>exec</strong> sub-command: execute an arbitrary command within container <code>singularity exec hello-world_latest.sif cat /etc/os-release</code></p></li>
+<li><strong>shell</strong> sub-command: invokes an interactive shell within a container</li>
 </ul>
+<pre><code>singularity shell hello-world_latest.sif</code></pre>
+<ul>
+<li><strong>run</strong> sub-command: executes the container’s runscript</li>
+</ul>
+<pre><code>singularity run hello-world_latest.sif </code></pre>
+<ul>
+<li><strong>exec</strong> sub-command: execute an arbitrary command within container</li>
+</ul>
+<pre><code>singularity exec hello-world_latest.sif cat /etc/os-release</code></pre>
 <h1 id="singularity-build">Singularity build</h1>
 <ul>
-<li>Root/sudo privilege is needed <code>singularity build --help</code></li>
-<li>Build from a definition file <code>sudo singularity --debug build mycontainer.sif Singularity</code></li>
+<li>Root/sudo privilege is needed</li>
 </ul>
+<pre><code>singularity build --help</code></pre>
+<ul>
+<li>Build from a definition file</li>
+</ul>
+<pre><code>sudo singularity --debug build mycontainer.sif Singularity </code></pre>
 <h1 id="defination-files-recipts">Defination files (recipts)</h1>
 <pre><code>Bootstrap: docker
 From: ubuntu
@@ -239,9 +273,13 @@ sudo singularity build --sandbox build gccbox docker://gcc:7.2.0</code></pre>
 <ul>
 <li>Can be built from a recipe or existing image</li>
 <li>Used to develop, test, and make changes, then build or convert it into a standard image</li>
-<li>When you want to alter your image, you can use commands like shell, exec, run, with the –writable option `sudo singularity shell –writable test-box```</li>
-<li>Convert a sandbox to an immutable final image: <code>sudo singularity build test-box.sif test-box</code></li>
+<li>When you want to alter your image, you can use commands like shell, exec, run, with the –writable option</li>
 </ul>
+<pre><code>sudo singularity shell --writable test-box</code></pre>
+<ul>
+<li>Convert a sandbox to an immutable final image:</li>
+</ul>
+<pre><code>sudo singularity build test-box.sif test-box</code></pre>
 <p>To check how a images is built, running script and environment variables.</p>
 <h1 id="inspect-containers">Inspect containers</h1>
 <pre><code>singularity inspect [options] image_name
@@ -256,11 +294,15 @@ sudo singularity build --sandbox build gccbox docker://gcc:7.2.0</code></pre>
 <pre><code></code></pre>
 <h1 id="run-singularity-containers-on-lawrencium">Run Singularity containers on Lawrencium</h1>
 <ul>
-<li>File transfer to LRC cluster <code>scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path</code></li>
+<li>File transfer to LRC cluster</li>
+</ul>
+<pre><code>scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path </code></pre>
+<ul>
 <li>Run your container interactively
 <ul>
-<li>Request an interactive compute node -<code>singularity shell/run/exec container.sif</code></li>
-</ul></li>
+<li>Request an interactive compute node</li>
+</ul>
+<pre><code>singularity shell/run/exec container.sif</code></pre></li>
 <li>Submit a slurm job</li>
 </ul>
 <h1 id="job-submission-example">Job Submission Example</h1>
@@ -276,7 +318,7 @@ cd $SLURM_SUBMIT_DIR
 singularity exec your-container-name.sif CMD PARMs</code></pre>
 <h1 id="container-binging-points">Container binging points</h1>
 <h1 id="run-a-gpu-container">Run a GPU container</h1>
-<p><code>singularity shell --nv --bind ${CUDA_HOME} ...</code></p>
+<pre><code>singularity shell --nv --bind ${CUDA_HOME} ...</code></pre>
 <h1 id="getting-help">Getting help</h1>
 <ul>
 <li>Virtual Office Hours:
