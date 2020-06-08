@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="June 10, 2020" />
+  <title>Container 101 on Lawrencium</title>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="https://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Container 101 on Lawrencium</h1>
+  <p class="author">
+June 10, 2020
+  </p>
+  <p class="date">Wei Feinstein</p>
+</div>
+<div id="outline" class="slide section level1">
+<h1>Outline</h1>
+<ul>
+<li>Lawrencium Supercluster overview</li>
+<li>Lawrencium resources &amp; services<br />
+</li>
+<li>Container technology overview</li>
+<li>How to build singularity containers</li>
+<li>How to run singularity containers on Lawrencium</li>
+</ul>
+</div>
+<div id="lawrencium-cluster-overview" class="slide section level1">
+<h1>Lawrencium Cluster Overview</h1>
+<center>
+<img src="figures/lrc.png" width="80%">
+</center>
+</div>
+<div id="lawrencium-condo-cluster" class="slide section level1">
+<h1>Lawrencium Condo Cluster</h1>
+<ul>
+<li>Lawrencium is a LBNL Condo Cluster Computing resources
+<ul>
+<li>Significant investment from LBNL</li>
+<li>Individual PIs purchase nodes and storage</li>
+<li>Computational cycles are shared among all lawrencium users</li>
+</ul></li>
+<li>Share the same supercluster infrastructure:
+<ul>
+<li>OTP authentication</li>
+<li>High speed infiniBand parallel file system for fast inter-node communication</li>
+<li>OS and security updates, software module farm, job scheduler SLURM</li>
+<li>Home/project storage, lustre parallel file system and backend network infrastructure.</li>
+</ul></li>
+</ul>
+</div>
+<div id="three-types-of-project-accounts" class="slide section level1">
+<h1>Three types of Project Accounts</h1>
+<ul>
+<li>PI Computing Allowance (PCA) account: free 300K SUs per year (pc_xxx)</li>
+<li>Condo account:
+<ul>
+<li>PIs purchase and contribute compute nodes to the general condo pool (lr_xxx)</li>
+<li>Run jobs within their condo contributions for free</li>
+</ul></li>
+<li>Recharge account: with minimal recharge rate ~ $0.01/SU (ac_xxx)</li>
+<li>$25 per user per month</li>
+<li>Refer to detailed information at <a href="https://sites.google.com/a/lbl.gov/hpc/getting-an-account">here</a></li>
+</ul>
+<h2 id="user-accounts">User accounts</h2>
+<ul>
+<li>User account request</li>
+<li>User agreement consent</li>
+<li>Check <a href="https://sites.google.com/a/lbl.gov/hpc/getting-an-account">here</a> for details</li>
+</ul>
+</div>
+<div id="softwre-module-farm" class="slide section level1">
+<h1>Softwre Module Farm</h1>
+<center>
+<img src="figures/SMF.png" width="80%">
+</center>
+</div>
+<div id="module-commands" class="slide section level1">
+<h1>Module commands</h1>
+<ul>
+<li><em>module purge</em>: clear user’s work environment</li>
+<li>*module availablev: check available software packages</li>
+<li><em>module load xxx</em>: load a package</li>
+<li><em>module list</em>: check currently loaded software</li>
+<li>Users may install their own software</li>
+<li>More <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/sl6-module-farm-guide">information</a></li>
+</ul>
+</div>
+<div id="jub-submission" class="slide section level1">
+<h1>Jub Submission</h1>
+<ul>
+<li>sbatch: submit a job to the batch queue system <code>sbatch myjob.sh</code></li>
+<li>srun: request an interactive node(s) and login automatically <code>srun -A ac_xxx -p lr5 -q lr_normal -t 1:0:0 --pty bash</code></li>
+<li>salloc : request an interactive node(s) <code>salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0</code></li>
+</ul>
+</div>
+<div id="job-monitoring" class="slide section level1">
+<h1>Job Monitoring</h1>
+<ul>
+<li>sinfo:view information about partitions and nodes (idle, allocated, drain, down ) <code>sinfo –r –p lr6</code></li>
+<li>squeue: check the current jobs in the batch queue system <code>squeue –u $USER</code></li>
+<li>sacct: information on jobs <code>sacct -X -o ‘jobid,user,partition,nodelist,stat’</code></li>
+<li>scancel : cancel a job <code>scancel jobID</code></li>
+<li>More <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions">information</a></li>
+</ul>
+</div>
+<div id="resources" class="slide section level1">
+<h1>Resources</h1>
+<ul>
+<li>Data Transfer node lrc-xfer.lbl.gov
+<ul>
+<li>scp -r your/source/file $USER@lrc-xder.lbl.gov:/cluster/path
+<ul>
+<li>rsync -avzh your/source/file $USER <span class="citation">@lrc-xfer.lbl.gov:/cluster/path</span></li>
+</ul></li>
+</ul></li>
+<li>Globus Online provide secured unified interface for data transfer
+<ul>
+<li>endpoint lbn#lrc, Globus Connect, AWS S3 connect</li>
+</ul></li>
+<li>Visualization and remote desktop
+<ul>
+<li>Detailed <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop">information</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="jupyterhub" class="slide section level1">
+<h1>Jupyterhub</h1>
+<center>
+<img src="figures/jupyter.png" width="80%">
+</center>
+<p><a href="https://lrc-jupyter.lbl.gov">https://lrc-jupyter.lbl.gov</a></p>
+</div>
+<div id="containerization" class="slide section level1">
+<h1>Containerization</h1>
+<ul>
+<li>Technology of putting an application and all of its dependencies into a single package.</li>
+<li>Portable, shareable, and reproducible.</li>
+<li>Your application brings its environment with it.</li>
+</ul>
+</div>
+<div id="containerization-examples" class="slide section level1">
+<h1>Containerization Examples</h1>
+<ul>
+<li>Package an analysis pipeline so that it runs on your laptop, in the cloud, and in a high performance computing (HPC) environment to produce the same result.</li>
+<li>Publish a paper and include a link to a container with all of the data and software that you used so that others can easily reproduce your results.</li>
+<li>Install and run an application that requires a complicated stack of dependencies with a few keystrokes.</li>
+<li>Create a pipeline or complex workflow where each individual program is meant to run on a different operating system.</li>
+</ul>
+</div>
+<div id="container-vs.-virtual-machine" class="slide section level1">
+<h1>Container vs. Virtual Machine</h1>
+</div>
+<div id="vm-services" class="slide section level1">
+<h1>VM services</h1>
+<center>
+<img src="vm.png" width="70%">
+</center>
+<p><a href="https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting">More information about VM</a></p>
+</div>
+<div id="singularity-technology" class="slide section level1">
+<h1>Singularity Technology</h1>
+<ul>
+<li>Open-source computer software that encapsulates an application and all its dependencies into a single image</li>
+<li>Bring containers and reproducibility to scientific computing and HPC</li>
+<li>Developed by Greg Kurtzer</li>
+<li>Singularity assumes that you will have a build system where you are the root user, but that you will also have a production system where you may or may not be the root user.</li>
+</ul>
+</div>
+<div id="singularity-workflow" class="slide section level1">
+<h1>Singularity Workflow</h1>
+<ul>
+<li>Install Singularity on a local machine</li>
+<li>Build Singularity images/containers on the local machine</li>
+<li>Transfer images/containers to LRC clusters</li>
+<li>Run images /containers on the cluster
+<ul>
+<li>Root privilege is not permitted</li>
+</ul></li>
+</ul>
+</div>
+<div id="install-singularity" class="slide section level1">
+<h1>Install Singularity</h1>
+<p>Three OS platforms: - Linux - Mac - Window Installation <a href="">instructions</a></p>
+<pre><code>$ singularity --version 
+$ singularity run docker://godlovedc/lolcow</code></pre>
+</div>
+<div id="create-singularity-containers" class="slide section level1">
+<h1>Create Singularity Containers</h1>
+<ul>
+<li>Directly from existing containers
+<ul>
+<li><a href="https://hub.docker.com/search?q=&amp;type=image">Docker hub</a></li>
+<li><a href="https://cloud.sylabs.io/library">Sylabs Cloud</a> and <a href="https://singularity-hub.org/">Singularity hub</a></li>
+<li><a href="https://www.nvidia.com/en-us/gpu-cloud/containers/">Nvidia HPC containers</a></li>
+<li><a href="https://biocontainers.pro/#/registry">Biocontainers</a></li>
+<li><a href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/">AWS</a></li>
+</ul></li>
+<li>Build from a definition file or recipes</li>
+</ul>
+</div>
+<div id="singularity-pull" class="slide section level1">
+<h1>Singularity pull</h1>
+<ul>
+<li>No root/sudo privilege is needed</li>
+<li>Create immutable squashfs containers <code>singularity pull --help</code></li>
+<li>Docker Hub:  Pull a container from Docker Hub.</li>
+</ul>
+<pre><code>singularity pull docker://ubuntu:18.04 
+singularity pull docker://gcc:7.2.0</code></pre>
+<ul>
+<li>Singularity Hub:  If no tag is specified, the master branch of the repository is used <code>singularity pull shub://singularityhub/hello-world</code></li>
+</ul>
+</div>
+<div id="singularity-shell-run-exec" class="slide section level1">
+<h1>Singularity shell, run, exec</h1>
+<ul>
+<li><p><strong>shell</strong> sub-command: invokes an interactive shell within a container <code>singularity shell hello-world_latest.sif</code></p></li>
+<li><p><strong>run</strong> sub-command: executes the container’s runscript <code>singularity run hello-world_latest.sif</code></p></li>
+<li><p><strong>exec</strong> sub-command: execute an arbitrary command within container <code>singularity exec hello-world_latest.sif cat /etc/os-release</code></p></li>
+</ul>
+</div>
+<div id="singularity-build" class="slide section level1">
+<h1>Singularity build</h1>
+<ul>
+<li>Root/sudo privilege is needed <code>singularity build --help</code></li>
+<li>Build from a definition file <code>sudo singularity --debug build mycontainer.sif Singularity</code></li>
+</ul>
+</div>
+<div id="defination-files-recipts" class="slide section level1">
+<h1>Defination files (recipts)</h1>
+<pre><code>Bootstrap: docker
+From: ubuntu
+# used singularity run-help 
+%help
+Hello. I&#39;m in the container.
+# executed on host after the base OS is installed.
+%setup
+    touch ${SINGULARITY_ROOTFS}/tacos.txt
+    echo “I love avocado” &gt;&gt; avocados.txt
+
+# copy files from your host system into the container 
+%files
+    avocados.txt /opt    
+
+%environment
+  export NAME=avocado
+
+# executed within the container after the base OS is installed at build time
+#install new software and libraries, config files,  directories, etc
+%post
+    echo &#39;export Avocado=TRUE &gt;&gt; $SINGULARITY_ENVIRONMENT
+# executed when the container image is run:  singularity run
+%runscript 
+    echo &quot;Hello! Arguments received: $* \n&quot;
+     exec echo &quot;$@&quot;  </code></pre>
+</div>
+<div id="bootstrap-agents" class="slide section level1">
+<h1>Bootstrap Agents</h1>
+<ul>
+<li>library (images hosted on the Container Library)</li>
+<li>docker (images hosted on Docker Hub)</li>
+<li>shub (images hosted on Singularity Hub)</li>
+<li>localimage (images saved on your machine)</li>
+<li>yum (yum based systems such as CentOS and Scientific Linux)</li>
+<li>debootstrap (apt based systems such as Debian and Ubuntu)</li>
+<li>arch (Arch Linux)</li>
+<li>busybox (BusyBox)</li>
+<li>zypper (zypper ba</li>
+</ul>
+</div>
+<div id="singularity-build-a-rewritable-sandbox" class="slide section level1">
+<h1>Singularity build a rewritable sandbox</h1>
+<pre><code>sudo singularity build --sandbox build test-box Singularity 
+sudo singularity build --sandbox build gccbox docker://gcc:7.2.0</code></pre>
+<ul>
+<li>Can be built from a recipe or existing image</li>
+<li>Used to develop, test, and make changes, then build or convert it into a standard image</li>
+<li>When you want to alter your image, you can use commands like shell, exec, run, with the –writable option `sudo singularity shell –writable test-box```</li>
+<li>Convert a sandbox to an immutable final image: <code>sudo singularity build test-box.sif test-box</code></li>
+</ul>
+<p>To check how a images is built, running script and environment variables.</p>
+</div>
+<div id="inspect-containers" class="slide section level1">
+<h1>Inspect containers</h1>
+<pre><code>singularity inspect [options] image_name
+    --lablels
+    --runscript
+    --deffile
+    --environment</code></pre>
+</div>
+<div id="singularity-python-spython" class="slide section level1">
+<h1>Singularity Python (spython)</h1>
+<ul>
+<li>Python API for Singularity containers</li>
+</ul>
+<pre><code></code></pre>
+</div>
+<div id="run-singularity-containers-on-lawrencium" class="slide section level1">
+<h1>Run Singularity containers on Lawrencium</h1>
+<ul>
+<li>File transfer to LRC cluster <code>scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path</code></li>
+<li>Run your container interactively
+<ul>
+<li>Request an interactive compute node -<code>singularity shell/run/exec container.sif</code></li>
+</ul></li>
+<li>Submit a slurm job</li>
+</ul>
+</div>
+<div id="job-submission-example" class="slide section level1">
+<h1>Job Submission Example</h1>
+<pre><code>#!/bin/bash -l
+#SBATCH --job-name=container-test        
+#SBATCH --partition=lr5          
+#SBATCH --account=ac_xxx         
+#SBATCH --qos=lr_normal         
+#SBATCH --nodes=1           
+#SBATCH --time=1-2:0:0          
+
+cd $SLURM_SUBMIT_DIR
+singularity exec your-container-name.sif CMD PARMs</code></pre>
+</div>
+<div id="container-binging-points" class="slide section level1">
+<h1>Container binging points</h1>
+</div>
+<div id="run-a-gpu-container" class="slide section level1">
+<h1>Run a GPU container</h1>
+<p><code>singularity shell --nv --bind ${CUDA_HOME} ...</code></p>
+</div>
+<div id="getting-help" class="slide section level1">
+<h1>Getting help</h1>
+<ul>
+<li>Virtual Office Hours:
+<ul>
+<li>Time: 10:30am - noon (Wednesdays)</li>
+<li>Request online</li>
+</ul></li>
+<li>Sending us tickets at hpcshelp@lbl.gov</li>
+<li>More information, documents, tips of how to use LBNL Supercluster http://scs.lbl.gov/</li>
+<li>DLab consulting: https://dlab.berkeley.edu/consulting</li>
+</ul>
+</div>
+</body>
+</html>
