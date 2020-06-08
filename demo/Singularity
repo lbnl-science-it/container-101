@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: ubuntu
+
+# used singularity run-help 
+%help
+Hello. I am in the container
+
+# executed on host outside of the container after the base OS is installed.
+# its use is discouraged
+%setup
+    touch ${SINGULARITY_ROOTFS}/tacos.txt
+    echo “I love avocado” >> avocados.txt
+
+# copy files from your host system into the container 
+%files
+    avocados.txt /opt    
+
+%environment
+  export NAME=avocado
+
+# executed within the container after the base OS is installed at build time
+# install new software and libraries, config files, directories, etc
+%post
+    echo 'export Avocado=TRUE' >> $SINGULARITY_ENVIRONMENT
+
+# executed when the container image is run:  singularity run
+%runscript
+    echo "Hello! Arguments received: $* \n"
+    exec echo "$@"

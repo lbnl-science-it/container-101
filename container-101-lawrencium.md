@@ -257,8 +257,9 @@ singularity inspect [options] image_name
 
 # Singularity Python (spython)
 - Python API for Singularity containers
+- Convert Dockerfile to Singularity def
 ```
-
+spython recipe Dockerfile > singularity.def
 ```
 
 # Run Singularity containers on Lawrencium
@@ -284,15 +285,27 @@ scp xxx.sif $USER@lrc-xfer.lbl.gov:/your/path
 #SBATCH --time=1-2:0:0			
 
 cd $SLURM_SUBMIT_DIR
-singularity exec your-container-name.sif CMD PARMs
+singularity exec your-container.sif CMD PARMs
 ```
 
-# Container binging points
-
+# Container bind path
+- Singularity allows mapping directories on host to directories within your container using bind mounts.
+- System-defined bind paths
+	- /global/home/users/
+	- /globa/scratch/
+- User defined bind paths ```-B /host/path/:/container/path``` 
+	- bind mounts the /host/path/ directory on the host to /container/path inside the container
+```
+singularity shell --nv -B /clusterfs/bear:/tmp pytorch_19_12_py3.sif
+```
 
 # Run a GPU container
+- Singularity  supports containers that use NVIDIA’s CUDA GPU compute framework, or AMD’s ROCm solution
+- --nv enables NVIDIA GPU support in Singularity
+- Remember to request a GPU node from the ES1 partition
 ```
-singularity shell --nv --bind ${CUDA_HOME} ...
+singularity exec --nv pytorch_19_12_py3.sif python -c "import torch; print(torch.__version__)"
+1.4.0a0+a5b4d78
 ```
 
 # Getting help
