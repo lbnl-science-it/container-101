@@ -14,7 +14,7 @@
 
 # Lawrencium Condo Cluster
 - Lawrencium is a LBNL Condo Computer clusterresources
-    - Significant investment from LBNL
+    - LBNL investmeent
     - Individual PIs purchase nodes and storage
     - Computational cycles are shared among all lawrencium users
 - Cluster infrastructure: 
@@ -23,34 +23,39 @@
     - OS and security updates, software module farm, job scheduler SLURM
     - Home/project storage, lustre parallel file system and backend network infrastructure.
 
-# Three types of Project Accounts
+# Accounts on Lawrencium
+## Three types of Project Accounts
 - PI Computing Allowance (PCA) account: free 300K SUs per year (pc_xxx)
 - Condo account: 
     - PIs purchase and contribute compute nodes to the general condo pool (lr_xxx)
-    - Run jobs within their condo contributions for free 
+    - Jobs are free of charge and have highest priority 
 - Recharge account: with minimal recharge rate ~ $0.01/SU (ac_xxx)
+
 - $25 per user per month 
-- Refer to detailed information at [here](https://sites.google.com/a/lbl.gov/hpc/getting-an-account
-)
+
+https://sites.google.com/a/lbl.gov/hpc/getting-an-account
 
 ## User accounts
 - User account request
 - User agreement consent 
-- Check [here](https://sites.google.com/a/lbl.gov/hpc/getting-an-account
-) for details
+
+https://sites.google.com/a/lbl.gov/hpc/getting-an-account
+
 
 # Softwre Module Farm 
 <center><img src="figures/SMF.png" width="60%"></center>
 
 # Module commands
 - *module purge*: clear user’s work environment
-- *module availablev: check available software packages
+- *module avail*: check available software packages
 - *module load xxx*: load a package
 - *module list*: check currently loaded software 
 - Users may install their own software
-- More [information](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/sl6-module-farm-guide)
 
-# Jub Submission
+https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/sl6-module-farm-guide
+
+# SLURM: 
+## Jub Submission
 - sbatch: submit a job to the batch queue system
 ```
 sbatch myjob.sh
@@ -63,17 +68,16 @@ srun -A ac_xxx -p lr5 -q lr_normal -t 1:0:0 --pty bash
 ```
 salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0
 ```
-
-# Job Monitoring
-- sinfo:view information about partitions and nodes (idle, allocated, drain, down ) 
+## Job Monitoring
+- sinfo: check status of partitions and nodes (idle, allocated, drain, down) 
  ```
  sinfo –r –p lr6
  ```
-- squeue: check the current jobs in the batch queue system
+- squeue: check jobs in the batch queuing system (R or PD)
 ```
 squeue –u $USER
 ```
-- sacct: information on jobs
+- sacct: check job information or history
 ```
 sacct -X -o ‘jobid,user,partition,nodelist,stat’
 ```
@@ -81,41 +85,44 @@ sacct -X -o ‘jobid,user,partition,nodelist,stat’
 ```
 scancel jobID
 ```
-- More [information](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions)
+https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions
 
-# Resources
-- Data Transfer node lrc-xfer.lbl.gov
-    - scp -r your/source/file  $USER@lrc-xder.lbl.gov:/cluster/path
-	  - rsync -avzh   your/source/file $USER @lrc-xfer.lbl.gov:/cluster/path
+# Services (1)
+- Designate Data Transfer node **lrc-xfer.lbl.gov**
+    - scp -r /your/source/file  $USER@lrc-xder.lbl.gov:/cluster/path
+    - rsync -avzh /your/source/file $USER @lrc-xfer.lbl.gov:/cluster/path
 - Globus Online provide secured unified interface for data transfer
     - endpoint lbn#lrc, Globus Connect, AWS S3 connect
 - Visualization and remote desktop
-    - Detailed [information](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop)
+    - Detailed information [click here](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop)
 
-# Service: Jupyterhub
-<center><img src="figures/jupyter.png" width="80%"></center>
+# Service (2): Jupyterhub
+
 https://lrc-jupyter.lbl.gov
 
-# Services: Cloud Computing
-- LBNL has a master payer program for cloud services on Amazon Web Services (AWS) and Google Cloud Platform (GCP).  
-- * No charge to have an account in the program
-- * Charges only for actual usage of cloud services like storage or compute
-- * Monthly billing for cloud usage are direct to your PID via recharge mechanism
-- * Simple enrollment process.
-- * De-enrollment only changes the billing setup in your account, and your account will continue to be active.
-- * You maintain complete control of your own AWS or GCP dashboard, and your data, tools, and services in your account are only accessible by you.
+<center><img src="figures/jupyter.png" width="80%"></center>
 
-# Services: Cloud Computing
-- Both AWS and GCP make discounts available to LBNL users for using their services.  Generally speaking, costs for using GCP will be lower than AWS due to lower pricing and additional discounts.  The discounts are:
+# Services (3): Cloud Computing
+- LBNL has a master payer program for cloud services on Amazon Web Services (AWS) and Google Cloud Platform (GCP).  
+* No charge to have an account in the program
+* Charges only for actual usage of cloud services like storage or compute
+* Monthly billing for cloud usage are direct to your PID via recharge mechanism
+* Simple enrollment process.
+* De-enrollment only changes the billing setup in your account, and your account will continue to be active.
+* Complete control of your own AWS or GCP dashboard, your data, tools, and services.
+
+# Servicesv (4): Cloud Computing
+- AWS and GCP make discounts available to LBNL users.
+
 | Type | AWS | GCP |  |
 | --- | --- | --- | --- |
 | Overall | 7% | 13% | |
 | Data Egress | 15% | 25% | 
+
 - AWS, [restrictions apply](https://aws.amazon.com/blogs/publicsector/aws-offers-data-egress-discount-to-researchers/) |
 - Over 125 people at LBNL with cloud accounts on AWS and GCP.  
 - Mostly use virtual machines and storage
-- Use containerization, machine learning, AI, and data visualization services on both platforms.
-
+- Use containerization, machine learning, AI, and data visualization services on both platforms
 - To set up a cloud account on either AWS or GCP, send email to [scienceit@lbl.gov](mailto:scienceit@lbl.gov)
 
 # Containerization
@@ -133,9 +140,8 @@ https://lrc-jupyter.lbl.gov
 <center><img src="figures/vm-sif.png" width="70%"></center>
 
 # VM services 
-<center><img src="figures/vm.png" width="70%"></center>
-[More information about VM](https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting
-)
+<center><img src="figures/vm.png" width="50%"></center>
+[More information about VM](https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting)
 
 # Singularity Technology
 - Open-source computer software that encapsulates an application and all its dependencies into a single image

@@ -1,10 +1,10 @@
-all: container-101-lawrencium_slides.html container-101-lawrencium.html
+all: container-101_slides.html container-101.html
 
-container-101-lawrencium.html: container-101-lawrencium.md
-	pandoc -s -o container-101-lawrencium.html container-101-lawrencium.md
+container-101.html: container-101.md
+	pandoc -s -o container-101.html container-101.md
 
-container-101-lawrencium_slides.html: container-101-lawrencium.md
-	pandoc -s --webtex -t slidy -o container-101-lawrencium_slides.html container-101-lawrencium.md
+container-101_slides.html: container-101.md
+	pandoc -s --webtex -t slidy -o container-101_slides.html container-101.md
 
 clean:
-	rm -rf container-101-lawrencium.html container-101-lawrencium_slides.html
+	rm -rf container-101.html container-101_slides.html
