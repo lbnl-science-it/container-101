@@ -51,7 +51,7 @@ June 10, 2020
 <ul>
 <li>Lawrencium is a LBNL Condo Computer clusterresources
 <ul>
-<li>Significant investment from LBNL</li>
+<li>LBNL investmeent</li>
 <li>Individual PIs purchase nodes and storage</li>
 <li>Computational cycles are shared among all lawrencium users</li>
 </ul></li>
@@ -64,25 +64,26 @@ June 10, 2020
 </ul></li>
 </ul>
 </div>
-<div id="three-types-of-project-accounts" class="slide section level1">
-<h1>Three types of Project Accounts</h1>
+<div id="accounts-on-lawrencium" class="slide section level1">
+<h1>Accounts on Lawrencium</h1>
+<h2 id="three-types-of-project-accounts">Three types of Project Accounts</h2>
 <ul>
-<li>PI Computing Allowance (PCA) account: free 300K SUs per year (pc_xxx)</li>
-<li>Condo account:
+<li><p>PI Computing Allowance (PCA) account: free 300K SUs per year (pc_xxx)</p></li>
+<li><p>Condo account:</p>
 <ul>
 <li>PIs purchase and contribute compute nodes to the general condo pool (lr_xxx)</li>
-<li>Run jobs within their condo contributions for free</li>
+<li>Jobs are free of charge and have highest priority</li>
 </ul></li>
-<li>Recharge account: with minimal recharge rate ~ $0.01/SU (ac_xxx)</li>
-<li>$25 per user per month</li>
-<li>Refer to detailed information at <a href="https://sites.google.com/a/lbl.gov/hpc/getting-an-account">here</a></li>
+<li><p>Recharge account: with minimal recharge rate ~ $0.01/SU (ac_xxx)</p></li>
+<li><p>$25 per user per month</p></li>
 </ul>
+<p>https://sites.google.com/a/lbl.gov/hpc/getting-an-account</p>
 <h2 id="user-accounts">User accounts</h2>
 <ul>
 <li>User account request</li>
 <li>User agreement consent</li>
-<li>Check <a href="https://sites.google.com/a/lbl.gov/hpc/getting-an-account">here</a> for details</li>
 </ul>
+<p>https://sites.google.com/a/lbl.gov/hpc/getting-an-account</p>
 </div>
 <div id="softwre-module-farm" class="slide section level1">
 <h1>Softwre Module Farm</h1>
@@ -94,15 +95,16 @@ June 10, 2020
 <h1>Module commands</h1>
 <ul>
 <li><em>module purge</em>: clear user’s work environment</li>
-<li>*module availablev: check available software packages</li>
+<li><em>module avail</em>: check available software packages</li>
 <li><em>module load xxx</em>: load a package</li>
 <li><em>module list</em>: check currently loaded software</li>
 <li>Users may install their own software</li>
-<li>More <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/sl6-module-farm-guide">information</a></li>
 </ul>
+<p>https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/sl6-module-farm-guide</p>
 </div>
-<div id="jub-submission" class="slide section level1">
-<h1>Jub Submission</h1>
+<div id="slurm" class="slide section level1">
+<h1>SLURM:</h1>
+<h2 id="jub-submission">Jub Submission</h2>
 <ul>
 <li>sbatch: submit a job to the batch queue system</li>
 </ul>
@@ -115,38 +117,32 @@ June 10, 2020
 <li>salloc : request an interactive node(s)</li>
 </ul>
 <pre><code>salloc –A pc_xxx –p lr6 –q lr_debug –t 0:30:0</code></pre>
-</div>
-<div id="job-monitoring" class="slide section level1">
-<h1>Job Monitoring</h1>
+<h2 id="job-monitoring">Job Monitoring</h2>
 <ul>
-<li>sinfo:view information about partitions and nodes (idle, allocated, drain, down )</li>
+<li>sinfo: check status of partitions and nodes (idle, allocated, drain, down)</li>
 </ul>
 <pre><code>sinfo –r –p lr6</code></pre>
 <ul>
-<li>squeue: check the current jobs in the batch queue system</li>
+<li>squeue: check jobs in the batch queuing system (R or PD)</li>
 </ul>
 <pre><code>squeue –u $USER</code></pre>
 <ul>
-<li>sacct: information on jobs</li>
+<li>sacct: check job information or history</li>
 </ul>
 <pre><code>sacct -X -o ‘jobid,user,partition,nodelist,stat’</code></pre>
 <ul>
 <li>scancel : cancel a job</li>
 </ul>
 <pre><code>scancel jobID</code></pre>
-<ul>
-<li>More <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions">information</a></li>
-</ul>
+<p>https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions</p>
 </div>
-<div id="resources" class="slide section level1">
-<h1>Resources</h1>
+<div id="services-1" class="slide section level1">
+<h1>Services (1)</h1>
 <ul>
-<li>Data Transfer node lrc-xfer.lbl.gov
+<li>Designate Data Transfer node <strong>lrc-xfer.lbl.gov</strong>
 <ul>
-<li>scp -r your/source/file $USER@lrc-xder.lbl.gov:/cluster/path
-<ul>
-<li>rsync -avzh your/source/file $USER <span class="citation">@lrc-xfer.lbl.gov:/cluster/path</span></li>
-</ul></li>
+<li>scp -r /your/source/file $USER@lrc-xder.lbl.gov:/cluster/path</li>
+<li>rsync -avzh /your/source/file $USER <span class="citation">@lrc-xfer.lbl.gov:/cluster/path</span></li>
 </ul></li>
 <li>Globus Online provide secured unified interface for data transfer
 <ul>
@@ -154,52 +150,66 @@ June 10, 2020
 </ul></li>
 <li>Visualization and remote desktop
 <ul>
-<li>Detailed <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop">information</a></li>
+<li>Detailed information <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop">click here</a></li>
 </ul></li>
 </ul>
 </div>
-<div id="service-jupyterhub" class="slide section level1">
-<h1>Service: Jupyterhub</h1>
+<div id="service-2-jupyterhub" class="slide section level1">
+<h1>Service (2): Jupyterhub</h1>
+<p>https://lrc-jupyter.lbl.gov</p>
 <center>
 <img src="figures/jupyter.png" width="80%">
 </center>
-<p>https://lrc-jupyter.lbl.gov</p>
 </div>
-<div id="services-cloud-computing" class="slide section level1">
-<h1>Services: Cloud Computing</h1>
+<div id="services-3-cloud-computing" class="slide section level1">
+<h1>Services (3): Cloud Computing</h1>
 <ul>
 <li>LBNL has a master payer program for cloud services on Amazon Web Services (AWS) and Google Cloud Platform (GCP).<br />
 </li>
-<li><ul>
 <li>No charge to have an account in the program</li>
-</ul></li>
-<li><ul>
 <li>Charges only for actual usage of cloud services like storage or compute</li>
-</ul></li>
-<li><ul>
 <li>Monthly billing for cloud usage are direct to your PID via recharge mechanism</li>
-</ul></li>
-<li><ul>
 <li>Simple enrollment process.</li>
-</ul></li>
-<li><ul>
 <li>De-enrollment only changes the billing setup in your account, and your account will continue to be active.</li>
-</ul></li>
-<li><ul>
-<li>You maintain complete control of your own AWS or GCP dashboard, and your data, tools, and services in your account are only accessible by you.</li>
-</ul></li>
+<li>Complete control of your own AWS or GCP dashboard, your data, tools, and services.</li>
 </ul>
 </div>
-<div id="services-cloud-computing-1" class="slide section level1">
-<h1>Services: Cloud Computing</h1>
+<div id="servicesv-4-cloud-computing" class="slide section level1">
+<h1>Servicesv (4): Cloud Computing</h1>
 <ul>
-<li><p>Both AWS and GCP make discounts available to LBNL users for using their services. Generally speaking, costs for using GCP will be lower than AWS due to lower pricing and additional discounts. The discounts are: | Type | AWS | GCP | | | — | — | — | — | | Overall | 7% | 13% | | | Data Egress | 15% | 25% |</p></li>
-<li><p>AWS, <a href="https://aws.amazon.com/blogs/publicsector/aws-offers-data-egress-discount-to-researchers/">restrictions apply</a> |</p></li>
-<li><p>Over 125 people at LBNL with cloud accounts on AWS and GCP.<br />
-</p></li>
-<li><p>Mostly use virtual machines and storage</p></li>
-<li><p>Use containerization, machine learning, AI, and data visualization services on both platforms.</p></li>
-<li><p>To set up a cloud account on either AWS or GCP, send email to <a href="mailto:scienceit@lbl.gov">scienceit@lbl.gov</a></p></li>
+<li>AWS and GCP make discounts available to LBNL users.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>AWS</th>
+<th>GCP</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Overall</td>
+<td>7%</td>
+<td>13%</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Data Egress</td>
+<td>15%</td>
+<td>25%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>AWS, <a href="https://aws.amazon.com/blogs/publicsector/aws-offers-data-egress-discount-to-researchers/">restrictions apply</a> |</li>
+<li>Over 125 people at LBNL with cloud accounts on AWS and GCP.<br />
+</li>
+<li>Mostly use virtual machines and storage</li>
+<li>Use containerization, machine learning, AI, and data visualization services on both platforms</li>
+<li>To set up a cloud account on either AWS or GCP, send email to <a href="mailto:scienceit@lbl.gov">scienceit@lbl.gov</a></li>
 </ul>
 </div>
 <div id="containerization" class="slide section level1">
@@ -228,7 +238,7 @@ June 10, 2020
 <div id="vm-services" class="slide section level1">
 <h1>VM services</h1>
 <center>
-<img src="figures/vm.png" width="70%">
+<img src="figures/vm.png" width="50%">
 </center>
 <p><a href="https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting">More information about VM</a></p>
 </div>
