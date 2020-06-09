@@ -1,4 +1,5 @@
 Bootstrap: docker
+#library, docker, shub, localimage, yum, debootstrap, arch, busybox, zypper
 From: ubuntu
 
 # used singularity run-help 
