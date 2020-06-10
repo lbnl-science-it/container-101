@@ -92,6 +92,15 @@
 <li>scancel : cancel a job</li>
 </ul>
 <pre><code>scancel jobID</code></pre>
+<ul>
+<li>Check slurm association, such as qos, account, partition</li>
+</ul>
+<pre><code>sacctmgr show association user=wfeinstein -p
+perceus-00|ac_test|wfeinstein|lr6|1||||||||||||lr_debug,lr_lowprio,lr_normal|||
+perceus-00|ac_test|wfeinstein|lr5|1||||||||||||lr_debug,lr_lowprio,lr_normal|||
+perceus-00|pc_test|wfeinstein|lr4|1||||||||||||lr_debug,lr_lowprio,lr_normal|||
+perceus-00|lr_test|wfeinstein|lr3|1||||||||||||lr_debug,lr_lowprio,lr_normal,te
+perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</code></pre>
 <p><a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions">https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/scheduler/slurm-usage-instructions</a></p>
 <h1 id="services-1">Services (1)</h1>
 <ul>
@@ -102,9 +111,9 @@
 </ul></li>
 <li>Globus Online provide secured unified interface for data transfer
 <ul>
-<li>endpoint lbn#lrc, Globus Connect, AWS S3 connect</li>
+<li>endpoint lbn#lrc, Globus Connect, AWS S3 connector</li>
 </ul></li>
-<li>Visualization and remote desktop
+<li>Visualization and remote desktop node <strong>viz.lbl.gov</strong>
 <ul>
 <li>Detailed information <a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/getting-started/remote-desktop">click here</a></li>
 </ul></li>
@@ -169,11 +178,12 @@
 <li>Portable, shareable, and reproducible.</li>
 <li>Your application brings its environment with it.</li>
 </ul>
-<h4 id="examples">Examples</h4>
+<h4 id="application">Application</h4>
 <ul>
 <li>Package an analysis pipeline so that it runs on your laptop, in the cloud, and in HPC environment to produce the same result.</li>
 <li>Publish a paper and include a link to a container with all of the data and software that you used so that others can easily reproduce your results.</li>
 <li>Install and run an application that requires a complicated stack of dependencies</li>
+<li>Legacy codes require outdated OS</li>
 </ul>
 <h1 id="container-vs.-virtual-machine">Container vs. Virtual Machine</h1>
 <p><left><img src="figures/vm-sif.png" width="70%"></left></p>
@@ -184,11 +194,13 @@
 <li>Developed by Greg Kurtzer</li>
 <li>Typically users have a build system as root users, but may not be root users on a production system</li>
 </ul>
+<h1 id="docker">Docker</h1>
+<p>Learn more <a href="https://docs.docker.com/get-docker/">docker</a></p>
 <h1 id="singularity-workflow">Singularity Workflow</h1>
 <ul>
 <li>Install Singularity on a local machine</li>
-<li>Build Singularity containers locally with a root permission</li>
-<li>Transfer containers to LRC clusters</li>
+<li>Build Singularity images locally with a root permission</li>
+<li>Transfer images to LRC clusters</li>
 <li>Run containers on the cluster
 <ul>
 <li>Root privilege is not permitted</li>
@@ -201,55 +213,48 @@
 - Window</code></pre>
 <p>Refer to instructions <a href="https://github.com/lbnl-science-it/container-101/blob/master/singularity_installation_guide.md">here</a> for details</p>
 <p>Test your installation:</p>
-<pre><code>$ singularity --version 
-$ singularity run docker://godlovedc/lolcow</code></pre>
+<pre><code>$ singularity --version
+  singularity version 3.2.1-1 
+$ singularity run docker://godlovedc/lolcow
+ ______________________________________
+/ A tall, dark stranger will have more \
+\ fun than you.                        /
+ --------------------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</code></pre>
 <h1 id="create-singularity-containers">Create Singularity Containers</h1>
 <ul>
-<li>Build from docker containers
+<li>Build directly from pre-built docker images
 <ul>
 <li><a href="https://hub.docker.com/search?q=&amp;type=image">Docker hub</a></li>
 <li><a href="https://cloud.sylabs.io/library">Sylabs Cloud</a> and <a href="https://singularity-hub.org/">Singularity hub</a></li>
+</ul></li>
+<li>More involved using docker images form other external resources
+<ul>
 <li><a href="https://www.nvidia.com/en-us/gpu-cloud/containers/">Nvidia HPC containers</a></li>
 <li><a href="https://biocontainers.pro/#/registry">Biocontainers</a></li>
 <li><a href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/">AWS</a></li>
 </ul></li>
 <li>Build using definition files or recipes</li>
 </ul>
-<h1 id="singularity-pull-directly-from-dockerhub-singularity-hub">Singularity pull directly from Dockerhub &amp; Singularity hub</h1>
+<h1 id="singularity-pull-directly-from-docker-shub">Singularity pull directly from docker:// &amp; shub://</h1>
 <ul>
 <li>No root/sudo privilege is needed</li>
-<li>Create immutable squashfs containers</li>
+<li>Create/download immutable squashfs images/containers</li>
 </ul>
 <pre><code>singularity pull --help</code></pre>
 <ul>
 <li>Docker Hub:  Pull a container from Docker Hub.</li>
 </ul>
-<pre><code>singularity pull docker://ubuntu:18.04 
-singularity pull docker://gcc:7.2.0</code></pre>
+<pre><code>$ singularity pull docker://ubuntu:18.04 
+$ singularity pull docker://gcc:7.2.0</code></pre>
 <ul>
 <li>Singularity Hub:  If no tag is specified, the master branch of the repository is used</li>
 </ul>
-<pre><code>singularity pull hello-world.sif shub://singularityhub/hello-world</code></pre>
-<h1 id="singularity-pull-when-docker-containers-provided-by-other-docker-repos">Singularity pull when Docker Containers Provided by Other docker repos</h1>
-<p><a href="https://www.nvidia.com/en-us/gpu-cloud/containers/">Nvidia HPC containers</a> <a href="https://biocontainers.pro/#/registry">Biocontainers</a> <a href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/">AWS</a></p>
-<p>Steps to build singularity containers:</p>
-<ul>
-<li>Build a docker container locally</li>
-</ul>
-<pre><code>docker pull nvcr.io/hpc/pgi-compilers:ce
-.....
-docker images
-nvcr.io/hpc/pgi-compilers                  ce                         c13ce6cf7f66        6 months ago        9.9GB
-openmpi3.1                                 latest                     08a5518bb344        9 months ago        14.3GB
-registry                                   2                          f32a97de94e1        15 months ago       25.8MB
-...</code></pre>
-<ul>
-<li>Push to the Docker Hub (docker login) or simply use your local docker registry</li>
-<li>Singularity build from local registry</li>
-</ul>
-<pre><code>singularity build pgi.sif docker-daemon://nvcr.io/hpc/pgi-compilers:ce
-</code></pre>
-<p>Another example of using docker containers from <a href="https://github.com/lbnl-science-it/singularity_aws_dl_container">AWS</a></p>
+<pre><code>$ singularity pull hello-world.sif shub://singularityhub/hello-world</code></pre>
 <h1 id="run-singularity-with-shell-run-exec">Run Singularity with shell, run, exec</h1>
 <ul>
 <li><strong>shell</strong> sub-command: invokes an interactive shell within a container</li>
@@ -258,11 +263,54 @@ registry                                   2                          f32a97de94
 <ul>
 <li><strong>run</strong> sub-command: executes the container’s runscript</li>
 </ul>
-<pre><code>singularity run hello-world.sif </code></pre>
+<pre><code>singularity run hello-world.sif</code></pre>
 <ul>
 <li><strong>exec</strong> sub-command: execute an arbitrary command within container</li>
 </ul>
 <pre><code>singularity exec hello-world.sif cat /etc/os-release</code></pre>
+<h1 id="singularity-pull-when-docker-containers-provided-by-other-external-docker-repositories">Singularity pull when Docker Containers Provided by Other External docker repositories</h1>
+<ul>
+<li><a href="https://www.nvidia.com/en-us/gpu-cloud/containers/">Nvidia HPC containers</a></li>
+<li><a href="https://biocontainers.pro/#/registry">Biocontainers</a></li>
+<li><a href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/">AWS</a></li>
+</ul>
+<h2 id="steps-to-build-singularity-containers-from-ngc">Steps to build singularity containers from NGC:</h2>
+<ul>
+<li>Pull a docker image locally (e.g. pgi compiler from NGC)</li>
+</ul>
+<pre><code>$ docker pull nvcr.io/hpc/pgi-compilers:ce
+.....
+
+$ docker images
+REPOSITORY                     TAG              IMAGE ID            CREATED             SIZE
+nvcr.io/hpc/pgi-compiler        ce            c13ce6cf7f66        6 months ago        9.9GB
+openmpi3.1                    latest          08a5518bb344        9 months ago        14.3GB
+registry                         2            f32a97de94e1        15 months ago       25.8MB
+...</code></pre>
+<h1 id="steps-to-build-singularity-containers-from-ngc-1">Steps to build singularity containers from NGC:</h1>
+<ul>
+<li><p>Push to the Docker Hub (docker login) or simply use your local docker images</p></li>
+<li><p>Singularity build from local registry</p></li>
+</ul>
+<pre><code>$ singularity build pgi.sif docker-daemon://nvcr.io/hpc/pgi-compilers:ce
+$ ls
+Dokerfile  hello-world.sif  pgi.sif  saxpy.c  Singularity</code></pre>
+<ul>
+<li>Compile OpenACC code</li>
+</ul>
+<pre><code>$ singularity exec pgi.sif pgcc -o saxpy -acc -Minfo saxpy.c
+saxpy:
+      9, Loop is parallelizable
+         Generating Tesla code
+          9, #pragma acc loop gang, vector(128) /* blockIdx.x threadIdx.x */
+      9, FMA (fused multiply-add) instruction(s) generated
+...</code></pre>
+<ul>
+<li>Execute binary ./saxpy</li>
+</ul>
+<pre><code>$ singularity exec pgi.sif ./saxpy
+y[0] = 2.000000</code></pre>
+<p>Another example of using docker containers from <a href="https://github.com/lbnl-science-it/singularity_aws_dl_container">AWS</a></p>
 <h1 id="singularity-build">Singularity build</h1>
 <ul>
 <li>Root/sudo privilege is needed</li>
@@ -302,6 +350,7 @@ Hello. I&#39;m in the container.
 %runscript 
     echo &quot;Hello! Arguments received: $* \n&quot;
     exec echo &quot;$@&quot;  </code></pre>
+<p>More information of <a href="https://sylabs.io/guides/3.0/user-guide/definition_files.html">singularity recipes</a></p>
 <h1 id="singularity-build-rewritable-sandbox">Singularity Build Rewritable Sandbox</h1>
 <ul>
 <li>Can be built from a recipe or existing container</li>
@@ -317,7 +366,7 @@ sudo singularity build --sandbox build test-box Singularity </code></pre>
 <li>Convert a sandbox to an immutable final container:</li>
 </ul>
 <pre><code>sudo singularity build test-box.sif test-box</code></pre>
-<h1 id="inspect-containers">Inspect containers</h1>
+<h1 id="inspect-containers">Inspect Containers</h1>
 <ul>
 <li>To check how a image is built, running script and environment variables..</li>
 </ul>
@@ -357,7 +406,7 @@ e.g. singularity inspect --deffile mycontainer.sif</code></pre>
 
 cd $SLURM_SUBMIT_DIR
 singularity exec mycontainer.sif cat /etc/os-release</code></pre>
-<h1 id="container-bind-path">Container bind path</h1>
+<h1 id="container-bind-path">Container Bind Path</h1>
 <ul>
 <li>Singularity allow mapping directories on host to directories within container</li>
 <li>Easy data access within containers</li>
@@ -370,8 +419,9 @@ singularity exec mycontainer.sif cat /etc/os-release</code></pre>
 <li>e.g.: mount /host/path/ on the host to /container/path inside the container</li>
 </ul>
 <pre><code>-B /host/path/:/container/path
-singularity shell --nv -B /clusterfs/bear:/tmp pytorch_19_12_py3.sif</code></pre>
-<h1 id="run-gpu-containers-and-mpi-containers">Run GPU Containers and MPI Containers</h1>
+
+singularity run --nv -B /global/home/users/$USER:/tmp pytorch_19_12_py3.sif ls /tmp</code></pre>
+<h1 id="run-gpu-and-mpi-containers">Run GPU and MPI Containers</h1>
 <ul>
 <li>Singularity supports NVIDIA’s CUDA GPU compute framework or AMD’s ROCm solution</li>
 <li>–nv enables NVIDIA GPU support in Singularity</li>
@@ -382,7 +432,28 @@ singularity shell --nv -B /clusterfs/bear:/tmp pytorch_19_12_py3.sif</code></pre
 <h2 id="run-mpi-containers">Run MPI Containers</h2>
 <ul>
 <li>If launch on multiple nodes, MPI libraries on the host and inside the container need to match</li>
-<li>If launch on one node, MPI library inside the container is called</li>
+<li>If launch on one node, only MPI library inside the container is called</li>
+</ul>
+<h1 id="exercise">Exercise</h1>
+<ul>
+<li><ol type="1">
+<li>singularity pull hello-world.sif shub://singularityhub/hello-world</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>generate hello-world.def or generate a sandbox to start with</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>add /data directory inside the container</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>build a new image hello-world-new.sif</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>bind /home/$USER on host to /data inside container</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>ls /data inside the new container</li>
+</ol></li>
 </ul>
 <h1 id="getting-help">Getting help</h1>
 <ul>
@@ -393,7 +464,7 @@ singularity shell --nv -B /clusterfs/bear:/tmp pytorch_19_12_py3.sif</code></pre
 </ul></li>
 <li>Sending us tickets at hpcshelp@lbl.gov</li>
 <li>More information, documents, tips of how to use LBNL Supercluster <a href="http://scs.lbl.gov">http://scs.lbl.gov/</a></li>
-<li>DLab consulting: https://dlab.berkeley.edu/consulting</li>
+<li>DLab consulting: <a href="https://dlab.berkeley.edu/consulting">https://dlab.berkeley.edu/consulting</a></li>
 </ul>
 <p>Please fill out <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrmW-7gZ8FankQwEceY6r_uXPmLHAuXFjDDfwu-86A1a0llg/viewform">Training Survey</a> to get your comments and help us improve.</p>
 </body>
