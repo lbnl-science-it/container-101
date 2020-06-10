@@ -42,9 +42,8 @@ June 10, 2020
 </div>
 <div id="lawrencium-cluster-overview" class="slide section level1">
 <h1>Lawrencium Cluster Overview</h1>
-<center>
-<img src="figures/lrc.png" width="80%">
-</center>
+<p><left><img src="figures/lrc.png" width="45%"></left></p>
+<p><a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/lbnl-supercluster/lawrencium">Detailed informaton of Lawrencium</a></p>
 </div>
 <div id="accounts-on-lawrencium" class="slide section level1">
 <h1>Accounts on Lawrencium</h1>
@@ -78,6 +77,10 @@ June 10, 2020
 <h1>SLURM: Resource Manager &amp; Job Scheduler</h1>
 <h3 id="jub-submission">Jub Submission</h3>
 <ul>
+<li>Get help with the complete command options</li>
+</ul>
+<pre><code>sbatch --help</code></pre>
+<ul>
 <li>sbatch: submit a job to the batch queue system</li>
 </ul>
 <pre><code>sbatch myjob.sh</code></pre>
@@ -103,7 +106,7 @@ June 10, 2020
 <ul>
 <li>sacct: check job information or history</li>
 </ul>
-<pre><code>sacct -X -o ‘jobid,user,partition,nodelist,stat’</code></pre>
+<pre><code>sacct -X -o &#39;jobid,user,partition,nodelist,stat&#39;</code></pre>
 <ul>
 <li>scancel : cancel a job</li>
 </ul>
@@ -139,10 +142,7 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 </div>
 <div id="service-2-jupyterhub" class="slide section level1">
 <h1>Service (2): Jupyterhub</h1>
-<a href="https://lrc-jupyter.lbl.gov">LRC Jupyterhub</a>
-<center>
-<img src="figures/jupyter.png" width="70%">
-</center>
+<p><a href="https://lrc-jupyter.lbl.gov">LRC Jupyterhub</a> <left><img src="figures/jupyter.png" width="40%"></left></p>
 </div>
 <div id="services-3-cloud-computing" class="slide section level1">
 <h1>Services (3): Cloud Computing</h1>
@@ -196,15 +196,16 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 </div>
 <div id="virtual-machine-services" class="slide section level1">
 <h1>Virtual Machine Services</h1>
-<p><left><img src="figures/vm.png" width="60%"></left></p>
+<p><left><img src="figures/vm.png" width="25%"></left></p>
 <p>More information of VM click <a href="https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting">here</a></p>
 </div>
 <div id="containerization" class="slide section level1">
 <h1>Containerization</h1>
 <ul>
-<li>Technology of putting an application and all of its dependencies into a single package.</li>
+<li>Standardized packaging of software for software and dependencies</li>
 <li>Portable, shareable, and reproducible.</li>
 <li>Your application brings its environment with it.</li>
+<li>Share the same OS kernel</li>
 </ul>
 <h4 id="application">Application</h4>
 <ul>
@@ -216,7 +217,7 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 </div>
 <div id="container-vs.-virtual-machine" class="slide section level1">
 <h1>Container vs. Virtual Machine</h1>
-<p><left><img src="figures/vm-sif.png" width="70%"></left></p>
+<p><left><img src="figures/vm-sif.png" width="30%"></left></p>
 </div>
 <div id="singularity-technology" class="slide section level1">
 <h1>Singularity Technology</h1>
@@ -229,6 +230,13 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 </div>
 <div id="docker" class="slide section level1">
 <h1>Docker</h1>
+<ul>
+<li>Bring containerization to the community-scale</li>
+<li>Rich image repository</li>
+<li>Widely used by scientific communities</li>
+<li>Compose for defining multi-container, recipe/definition file to build docker images</li>
+<li>Security concerns not ideal for the HPC environment</li>
+</ul>
 <p>Learn more <a href="https://docs.docker.com/get-docker/">docker</a></p>
 </div>
 <div id="singularity-workflow" class="slide section level1">
@@ -272,7 +280,7 @@ $ singularity run docker://godlovedc/lolcow
 <li><a href="https://hub.docker.com/search?q=&amp;type=image">Docker hub</a></li>
 <li><a href="https://cloud.sylabs.io/library">Sylabs Cloud</a> and <a href="https://singularity-hub.org/">Singularity hub</a></li>
 </ul></li>
-<li>More involved using docker images form other external resources
+<li>More involved using docker images from other external resources
 <ul>
 <li><a href="https://www.nvidia.com/en-us/gpu-cloud/containers/">Nvidia HPC containers</a></li>
 <li><a href="https://biocontainers.pro/#/registry">Biocontainers</a></li>
@@ -371,8 +379,8 @@ y[0] = 2.000000</code></pre>
 </ul>
 <pre><code>sudo singularity --debug build mycontainer.sif Singularity </code></pre>
 </div>
-<div id="defination-filerecipe" class="slide section level1">
-<h1>Defination File/Recipe</h1>
+<div id="definition-filerecipe" class="slide section level1">
+<h1>Definition File/Recipe</h1>
 <pre><code>Bootstrap: docker
 #library, docker, shub, localimage, yum, debootstrap, arch, busybox, zypper 
 From: ubuntu
@@ -384,7 +392,7 @@ Hello. I&#39;m in the container.
 # executed on host after the base OS is installed.
 %setup
     touch ${SINGULARITY_ROOTFS}/tacos.txt
-    echo “I love avocado” &gt;&gt; avocados.txt
+    echo &quot;I love avocado&quot; &gt;&gt; avocados.txt
 
 # copy files from your host system into the container 
 %files
@@ -396,7 +404,7 @@ Hello. I&#39;m in the container.
 # executed within the container after the base OS is installed at build time
 #install new software and libraries, config files,  directories, etc
 %post
-    echo &#39;export Avocado=TRUE &gt;&gt; $SINGULARITY_ENVIRONMENT
+    echo &#39;export Avocado=TRUE&#39; &gt;&gt; $SINGULARITY_ENVIRONMENT
 
 # executed when the container image is run:  singularity run
 %runscript 
@@ -410,8 +418,8 @@ Hello. I&#39;m in the container.
 <li>Can be built from a recipe or existing container</li>
 <li>Used to develop, test, and make changes, then build or convert it into a standard image</li>
 </ul>
-<pre><code>sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
-sudo singularity build --sandbox build test-box Singularity </code></pre>
+<pre><code>sudo singularity build --sandbox gccbox docker://gcc:7.2.0
+sudo singularity build --sandbox test-box Singularity </code></pre>
 <ul>
 <li>When you want to alter your image, you can use commands like shell, exec, run, with the –writable option</li>
 </ul>

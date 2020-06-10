@@ -10,7 +10,9 @@
 - Run singularity containers on Lawrencium
 
 # Lawrencium Cluster Overview
-<center><img src="figures/lrc.png" width="80%"></center>
+<left><img src="figures/lrc.png" width="45%"></left>
+
+[Detailed informaton of Lawrencium](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/lbnl-supercluster/lawrencium)
 
 # Accounts on Lawrencium
 
@@ -41,6 +43,11 @@
 # SLURM: Resource Manager & Job Scheduler
  
 ### Jub Submission
+
+- Get help with the complete command options
+ ``` 
+sbatch --help
+ ```
 - sbatch: submit a job to the batch queue system
 ```
 sbatch myjob.sh
@@ -95,7 +102,7 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||
 # Service (2): Jupyterhub
 
 [LRC Jupyterhub](https://lrc-jupyter.lbl.gov)
-<center><img src="figures/jupyter.png" width="70%"></center>
+<left><img src="figures/jupyter.png" width="40%"></left>
 
 # Services (3): Cloud Computing
 
@@ -122,14 +129,15 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||
 - To set up a cloud account on either AWS or GCP, send email to [scienceit@lbl.gov](mailto:scienceit@lbl.gov)
 
 # Virtual Machine Services
-<left><img src="figures/vm.png" width="60%"></left>
+<left><img src="figures/vm.png" width="25%"></left>
 
 More information of VM click [here](https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting)
 
 # Containerization
-- Technology of putting an application and all of its dependencies into a single package.
+- Standardized packaging of software for software and dependencies
 - Portable, shareable, and reproducible.
 - Your application brings its environment with it.
+- Share the same OS kernel
 
 #### Application 
 - Package an analysis pipeline so that it runs on your laptop, in the cloud, and in HPC environment to produce the same result.
@@ -138,7 +146,7 @@ More information of VM click [here](https://commons.lbl.gov/display/itfaq/SVM+-+
 - Legacy codes require outdated OS
 
 # Container vs. Virtual Machine
-<left><img src="figures/vm-sif.png" width="70%"></left>
+<left><img src="figures/vm-sif.png" width="30%"></left>
 
 # Singularity Technology
 
@@ -148,6 +156,12 @@ More information of VM click [here](https://commons.lbl.gov/display/itfaq/SVM+-+
 - Typically users have a build system as root users, but may not be root users on a production system
 
 # Docker
+
+- Bring containerization to the community-scale
+- Rich image repository
+- Widely used by scientific communities
+- Compose for defining multi-container, recipe/definition file to build docker images
+- Security concerns not ideal for the HPC environment 
 
 Learn more [docker](https://docs.docker.com/get-docker/) 
 

@@ -34,9 +34,8 @@
 <li>Run singularity containers on Lawrencium</li>
 </ul>
 <h1 id="lawrencium-cluster-overview">Lawrencium Cluster Overview</h1>
-<center>
-<img src="figures/lrc.png" width="80%">
-</center>
+<p><left><img src="figures/lrc.png" width="45%"></left></p>
+<p><a href="https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/lbnl-supercluster/lawrencium">Detailed informaton of Lawrencium</a></p>
 <h1 id="accounts-on-lawrencium">Accounts on Lawrencium</h1>
 <h3 id="three-types-of-project-accounts">Three types of Project Accounts</h3>
 <ul>
@@ -64,6 +63,10 @@
 <h1 id="slurm-resource-manager-job-scheduler">SLURM: Resource Manager &amp; Job Scheduler</h1>
 <h3 id="jub-submission">Jub Submission</h3>
 <ul>
+<li>Get help with the complete command options</li>
+</ul>
+<pre><code>sbatch --help</code></pre>
+<ul>
 <li>sbatch: submit a job to the batch queue system</li>
 </ul>
 <pre><code>sbatch myjob.sh</code></pre>
@@ -87,7 +90,7 @@
 <ul>
 <li>sacct: check job information or history</li>
 </ul>
-<pre><code>sacct -X -o 'jobid,user,partition,nodelist,stat'</code></pre>
+<pre><code>sacct -X -o &#39;jobid,user,partition,nodelist,stat&#39;</code></pre>
 <ul>
 <li>scancel : cancel a job</li>
 </ul>
@@ -119,10 +122,7 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 </ul></li>
 </ul>
 <h1 id="service-2-jupyterhub">Service (2): Jupyterhub</h1>
-<a href="https://lrc-jupyter.lbl.gov">LRC Jupyterhub</a>
-<center>
-<img src="figures/jupyter.png" width="70%">
-</center>
+<p><a href="https://lrc-jupyter.lbl.gov">LRC Jupyterhub</a> <left><img src="figures/jupyter.png" width="40%"></left></p>
 <h1 id="services-3-cloud-computing">Services (3): Cloud Computing</h1>
 <ul>
 <li>LBNL has a master payer program for cloud services on Amazon Web Services (AWS) and Google Cloud Platform (GCP).<br />
@@ -170,13 +170,14 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 <li>To set up a cloud account on either AWS or GCP, send email to <a href="mailto:scienceit@lbl.gov">scienceit@lbl.gov</a></li>
 </ul>
 <h1 id="virtual-machine-services">Virtual Machine Services</h1>
-<p><left><img src="figures/vm.png" width="60%"></left></p>
+<p><left><img src="figures/vm.png" width="25%"></left></p>
 <p>More information of VM click <a href="https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting">here</a></p>
 <h1 id="containerization">Containerization</h1>
 <ul>
-<li>Technology of putting an application and all of its dependencies into a single package.</li>
+<li>Standardized packaging of software for software and dependencies</li>
 <li>Portable, shareable, and reproducible.</li>
 <li>Your application brings its environment with it.</li>
+<li>Share the same OS kernel</li>
 </ul>
 <h4 id="application">Application</h4>
 <ul>
@@ -186,7 +187,7 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 <li>Legacy codes require outdated OS</li>
 </ul>
 <h1 id="container-vs.-virtual-machine">Container vs. Virtual Machine</h1>
-<p><left><img src="figures/vm-sif.png" width="70%"></left></p>
+<p><left><img src="figures/vm-sif.png" width="30%"></left></p>
 <h1 id="singularity-technology">Singularity Technology</h1>
 <ul>
 <li>Open-source computer software that encapsulates an application and all its dependencies into a single image</li>
@@ -195,6 +196,13 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||</cod
 <li>Typically users have a build system as root users, but may not be root users on a production system</li>
 </ul>
 <h1 id="docker">Docker</h1>
+<ul>
+<li>Bring containerization to the community-scale</li>
+<li>Rich image repository</li>
+<li>Widely used by scientific communities</li>
+<li>Compose for defining multi-container, recipe/definition file to build docker images</li>
+<li>Security concerns not ideal for the HPC environment</li>
+</ul>
 <p>Learn more <a href="https://docs.docker.com/get-docker/">docker</a></p>
 <h1 id="singularity-workflow">Singularity Workflow</h1>
 <ul>
@@ -320,19 +328,19 @@ y[0] = 2.000000</code></pre>
 <li>Build from a definition file</li>
 </ul>
 <pre><code>sudo singularity --debug build mycontainer.sif Singularity </code></pre>
-<h1 id="defination-filerecipe">Definition File/Recipe</h1>
+<h1 id="definition-filerecipe">Definition File/Recipe</h1>
 <pre><code>Bootstrap: docker
 #library, docker, shub, localimage, yum, debootstrap, arch, busybox, zypper 
 From: ubuntu
 
 # used singularity run-help 
 %help
-Hello. I'm in the container.
+Hello. I&#39;m in the container.
 
 # executed on host after the base OS is installed.
 %setup
     touch ${SINGULARITY_ROOTFS}/tacos.txt
-    echo "I love avocado" &gt;&gt; avocados.txt
+    echo &quot;I love avocado&quot; &gt;&gt; avocados.txt
 
 # copy files from your host system into the container 
 %files
