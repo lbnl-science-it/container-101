@@ -87,7 +87,7 @@
 <ul>
 <li>sacct: check job information or history</li>
 </ul>
-<pre><code>sacct -X -o ‘jobid,user,partition,nodelist,stat’</code></pre>
+<pre><code>sacct -X -o 'jobid,user,partition,nodelist,stat'</code></pre>
 <ul>
 <li>scancel : cancel a job</li>
 </ul>
@@ -232,7 +232,7 @@ $ singularity run docker://godlovedc/lolcow
 <li><a href="https://hub.docker.com/search?q=&amp;type=image">Docker hub</a></li>
 <li><a href="https://cloud.sylabs.io/library">Sylabs Cloud</a> and <a href="https://singularity-hub.org/">Singularity hub</a></li>
 </ul></li>
-<li>More involved using docker images form other external resources
+<li>More involved using docker images from other external resources
 <ul>
 <li><a href="https://www.nvidia.com/en-us/gpu-cloud/containers/">Nvidia HPC containers</a></li>
 <li><a href="https://biocontainers.pro/#/registry">Biocontainers</a></li>
@@ -320,19 +320,19 @@ y[0] = 2.000000</code></pre>
 <li>Build from a definition file</li>
 </ul>
 <pre><code>sudo singularity --debug build mycontainer.sif Singularity </code></pre>
-<h1 id="defination-filerecipe">Defination File/Recipe</h1>
+<h1 id="defination-filerecipe">Definition File/Recipe</h1>
 <pre><code>Bootstrap: docker
 #library, docker, shub, localimage, yum, debootstrap, arch, busybox, zypper 
 From: ubuntu
 
 # used singularity run-help 
 %help
-Hello. I&#39;m in the container.
+Hello. I'm in the container.
 
 # executed on host after the base OS is installed.
 %setup
     touch ${SINGULARITY_ROOTFS}/tacos.txt
-    echo “I love avocado” &gt;&gt; avocados.txt
+    echo "I love avocado" &gt;&gt; avocados.txt
 
 # copy files from your host system into the container 
 %files
@@ -344,7 +344,7 @@ Hello. I&#39;m in the container.
 # executed within the container after the base OS is installed at build time
 #install new software and libraries, config files,  directories, etc
 %post
-    echo &#39;export Avocado=TRUE &gt;&gt; $SINGULARITY_ENVIRONMENT
+    echo &#39;export Avocado=TRUE&#39; &gt;&gt; $SINGULARITY_ENVIRONMENT
 
 # executed when the container image is run:  singularity run
 %runscript 

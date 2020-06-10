@@ -98,5 +98,5 @@ Follow the instructions above for Ubuntu/Debian
 On Windows machines, you’ll need to spin up a Linux VM to run Singularity. There are a number of hypervisors available on Windows, including VirtualBox and [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V) or [Subsystem for Linux 2](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux).  So pick your favorite hypervisor on Windows. Once you spin up a Linux VM on Windows, you can follow the previous instructions to install Singularity in the VM. 
 
 ## Reference
-[Installing Singularity](https://sylabs.io/guides/2.6/user-guide/installation.html)
+[Installing Singularity](https://sylabs.io/guides/3.2/user-guide/installation.html)
 
