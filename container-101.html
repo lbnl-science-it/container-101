@@ -356,8 +356,8 @@ Hello. I&#39;m in the container.
 <li>Can be built from a recipe or existing container</li>
 <li>Used to develop, test, and make changes, then build or convert it into a standard image</li>
 </ul>
-<pre><code>sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
-sudo singularity build --sandbox build test-box Singularity </code></pre>
+<pre><code>sudo singularity build --sandbox gccbox docker://gcc:7.2.0
+sudo singularity build --sandbox test-box Singularity </code></pre>
 <ul>
 <li>When you want to alter your image, you can use commands like shell, exec, run, with the –writable option</li>
 </ul>
