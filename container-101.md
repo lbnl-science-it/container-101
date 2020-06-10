@@ -65,7 +65,7 @@ squeue –u $USER
 ```
 - sacct: check job information or history
 ```
-sacct -X -o ‘jobid,user,partition,nodelist,stat’
+sacct -X -o 'jobid,user,partition,nodelist,stat'
 ```
 - scancel : cancel a job
 ```
@@ -190,7 +190,7 @@ $ singularity run docker://godlovedc/lolcow
 - Build directly from pre-built docker images 
     - [Docker hub](https://hub.docker.com/search?q=&type=image) 
     - [Sylabs Cloud](https://cloud.sylabs.io/library) and [Singularity hub](https://singularity-hub.org/) 
-- More involved using docker images form other external resources 
+- More involved using docker images from other external resources 
     - [Nvidia HPC containers](https://www.nvidia.com/en-us/gpu-cloud/containers/)
     - [Biocontainers](https://biocontainers.pro/#/registry)
     - [AWS](https://aws.amazon.com/releasenotes/available-deep-learning-containers-images/)
@@ -289,7 +289,7 @@ singularity build --help
 sudo singularity --debug build mycontainer.sif Singularity 
 ```
 
-# Defination File/Recipe
+# Definition File/Recipe
 ```
 Bootstrap: docker
 #library, docker, shub, localimage, yum, debootstrap, arch, busybox, zypper 
@@ -302,7 +302,7 @@ Hello. I'm in the container.
 # executed on host after the base OS is installed.
 %setup
     touch ${SINGULARITY_ROOTFS}/tacos.txt
-    echo “I love avocado” >> avocados.txt
+    echo "I love avocado" >> avocados.txt
 
 # copy files from your host system into the container 
 %files
@@ -314,7 +314,7 @@ Hello. I'm in the container.
 # executed within the container after the base OS is installed at build time
 #install new software and libraries, config files,  directories, etc
 %post
-    echo 'export Avocado=TRUE >> $SINGULARITY_ENVIRONMENT
+    echo 'export Avocado=TRUE' >> $SINGULARITY_ENVIRONMENT
 
 # executed when the container image is run:  singularity run
 %runscript 
@@ -327,8 +327,8 @@ Hello. I'm in the container.
 - Can be built from a recipe or existing container 
 - Used to develop, test, and make changes, then build or convert it into a standard image
 ```
-sudo singularity build --sandbox build gccbox docker://gcc:7.2.0
-sudo singularity build --sandbox build test-box Singularity 
+sudo singularity build --sandbox gccbox docker://gcc:7.2.0
+sudo singularity build --sandbox test-box Singularity 
 ```
 - When you want to alter your image, you can use commands like shell, exec, run, with the --writable option
 ```
