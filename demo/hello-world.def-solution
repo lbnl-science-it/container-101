@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: ubuntu:14.04
+
+%post
+mkdir -p /data
+touch /data/hello
+
+%runscript
+
+exec echo "Tacotacotaco"
