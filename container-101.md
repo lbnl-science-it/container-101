@@ -10,7 +10,7 @@
 - Run singularity containers on Lawrencium
 
 # Lawrencium Cluster Overview
-<left><img src="figures/lrc.png" width="80%"></left>
+<left><img src="figures/lrc.png" width="70%"></left>
 
 [Detailed informaton of Lawrencium](https://sites.google.com/a/lbl.gov/high-performance-computing-services-group/lbnl-supercluster/lawrencium)
 
@@ -102,7 +102,7 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||
 # Service (2): Jupyterhub
 
 [LRC Jupyterhub](https://lrc-jupyter.lbl.gov)
-<left><img src="figures/jupyter.png" width="70%"></left>
+<left><img src="figures/jupyter.png" width="60%"></left>
 
 
 # Services (3): Cloud Computing
@@ -130,24 +130,24 @@ perceus-00|scs|wfeinstein|es1|1||||||||||||es_debug,es_lowprio,es_normal|||
 - To set up a cloud account on either AWS or GCP, send email to [scienceit@lbl.gov](mailto:scienceit@lbl.gov)
 
 # Virtual Machine Services
-<left><img src="figures/vm.png" width="55%"></left>
+<left><img src="figures/vm.png" width="40%"></left>
 
 More information of VM click [here](https://commons.lbl.gov/display/itfaq/SVM+-+Virtual+Machine+Hosting)
 
 # Containerization
-- Standardized packaging of software for software and dependencies
+- Standardized packaging of software and dependencies
 - Portable, shareable, and reproducible.
 - Your application brings its environment with it.
 - Share the same OS kernel
 
-#### Application 
+#### Applications 
 - Package an analysis pipeline so that it runs on your laptop, in the cloud, and in HPC environment to produce the same result.
 - Publish a paper and include a link to a container with all of the data and software that you used so that others can easily reproduce your results.
 - Install and run an application that requires a complicated stack of dependencies
 - Legacy codes require outdated OS
 
 # Container vs. Virtual Machine
-<left><img src="figures/vm-sif.png" width="65%"></left>
+<left><img src="figures/vm-sif.png" width="45%"></left>
 
 # Singularity Technology
 
